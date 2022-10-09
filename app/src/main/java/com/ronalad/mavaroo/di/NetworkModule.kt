@@ -1,6 +1,6 @@
 package com.ronalad.mavaroo.di
 
-import com.ronalad.mavaroo.data.remote.IMBDbApi
+import com.ronalad.mavaroo.network.IMBDbApi
 import com.ronalad.mavaroo.utils.Constants
 import dagger.Module
 import dagger.Provides

@@ -1,8 +1,8 @@
 package com.ronalad.mavaroo.di
 
-import com.ronalad.mavaroo.data.remote.IMBDbApi
-import com.ronalad.mavaroo.data.repository.IMBDbRepoImpl
-import com.ronalad.mavaroo.domain.repository.IMBDbRepo
+import com.ronalad.mavaroo.network.IMBDbApi
+import com.ronalad.mavaroo.network.repository.IMBDbRepoImpl
+import com.ronalad.mavaroo.network.repository.IMBDbRepo
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
