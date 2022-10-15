@@ -1,11 +1,9 @@
 package com.ronalad.mavaroo.title_details.presentation.composables.actors
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -16,15 +14,15 @@ import com.ronalad.mavaroo.title_details.domain.model.Actor
 fun ActorsList(
     modifier: Modifier = Modifier,
     contentPadding: PaddingValues = PaddingValues(0.dp),
-    verticalArrangement: Arrangement.Vertical = Arrangement.Top,
+    horizontalArrangement: Arrangement.Horizontal,
     actors: List<Actor>,
     onClick: (id: String) -> Unit
 ) {
 
-    LazyColumn(
+    LazyRow(
         modifier = modifier,
         contentPadding = contentPadding,
-        verticalArrangement = verticalArrangement
+        horizontalArrangement = horizontalArrangement
     ) {
 
         items(actors,
@@ -34,7 +32,7 @@ fun ActorsList(
         ) { actor ->
             ActorComposable(
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .width(100.dp)
                     .clickable { onClick(actor.id) },
                 image = actor.image,
                 name = actor.name,

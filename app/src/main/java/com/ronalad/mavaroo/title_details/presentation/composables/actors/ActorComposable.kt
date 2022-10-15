@@ -1,13 +1,12 @@
 package com.ronalad.mavaroo.title_details.presentation.composables.actors
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -33,22 +32,19 @@ fun ActorComposable(
     name: String,
     character: String
 ) {
-    ConstraintLayout(
-        modifier = modifier
-    ) {
 
-        val (imageRef, nameRef, characterRef) = createRefs()
+
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Spacer(modifier = Modifier.height(8.dp))
 
         Surface(
             shape = CircleShape,
             color = Snow,
             modifier = Modifier
                 .size(48.dp)
-                .constrainAs(imageRef) {
-                    start.linkTo(parent.start, margin = 20.dp)
-                    top.linkTo(parent.top, margin = 10.dp)
-                    bottom.linkTo(parent.bottom, margin = 10.dp)
-                }
         ) {
             AsyncImage(
                 model = image,
@@ -58,6 +54,8 @@ fun ActorComposable(
             )
         }
 
+        Spacer(modifier = Modifier.height(8.dp))
+
         Text(
             text = name, style = TextStyle(
                 color = Color.White,
@@ -66,16 +64,11 @@ fun ActorComposable(
                 fontWeight = FontWeight.W500,
                 fontFamily = FontFamily.SansSerif
             ),
-            modifier = Modifier.constrainAs(nameRef) {
-                start.linkTo(imageRef.end, margin = 12.dp)
-                top.linkTo(imageRef.top)
-                bottom.linkTo(imageRef.bottom)
-                end.linkTo(characterRef.start, margin = 4.dp)
-                width = Dimension.fillToConstraints
-            },
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
         )
+
+        Spacer(modifier = Modifier.height(8.dp))
 
         Text(
             text = character, style = TextStyle(
@@ -83,15 +76,11 @@ fun ActorComposable(
                 fontSize = 12.sp,
                 lineHeight = 18.sp
             ),
-            modifier = Modifier.constrainAs(characterRef) {
-                top.linkTo(parent.top, margin = 10.dp)
-                bottom.linkTo(parent.bottom, margin = 10.dp)
-                end.linkTo(parent.end, margin = 20.dp)
-                width = Dimension.fillToConstraints
-            },
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
         )
+
+        Spacer(modifier = Modifier.height(8.dp))
     }
 }
 

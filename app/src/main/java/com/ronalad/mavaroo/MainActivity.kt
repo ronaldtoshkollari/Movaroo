@@ -30,9 +30,8 @@ class MainActivity : ComponentActivity() {
 //                    isLoading = popularMoviesState.value.isLoading,
 //                    errorMessage = popularMoviesState.value.errorMessage
 //                )
-
                 val state by newViewModel.titleDetailsState.collectAsState()
-                newViewModel.getTitleDetails("tt0110414")
+                newViewModel.getTitleDetails("tt1375666")
                 TitleDetailsScreen(
                     titleDetails = state.titleDetails,
                     isLoading = state.isLoading,
