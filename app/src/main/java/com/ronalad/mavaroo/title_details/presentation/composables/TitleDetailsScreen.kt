@@ -1,10 +1,15 @@
 package com.ronalad.mavaroo.title_details.presentation.composables
 
-import androidx.compose.foundation.*
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithContent
@@ -22,22 +27,27 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.ronalad.mavaroo.R
 import com.ronalad.mavaroo.common.composables.ExpandableText
 import com.ronalad.mavaroo.title_details.domain.model.TitleDetails
 import com.ronalad.mavaroo.title_details.presentation.composables.actors.ActorsList
 import com.ronalad.mavaroo.title_details.presentation.composables.similar_movies.SimilarTitleList
+import com.ronalad.mavaroo.title_details.presentation.viewmodel.TitleDetailsViewModel
 import com.ronalad.mavaroo.ui.theme.ChineseBlack
 
 @Composable
 fun TitleDetailsScreen(
-    titleDetails: TitleDetails,
-    isLoading: Boolean,
-    errorMessage: String,
-    onActorClick: (id: String) -> Unit,
-    onSimilarTitleClick: (id: String) -> Unit
+    navController: NavController,
+    titleId: String?,
+    titleDetailsViewModel: TitleDetailsViewModel = hiltViewModel()
 ) {
+
+    val titleDetailsState by titleDetailsViewModel.titleDetailsState.collectAsState()
+    val id = titleId ?: ""
+    titleDetailsViewModel.getTitleDetails(id)
 
     Column(
         modifier = Modifier
@@ -46,21 +56,21 @@ fun TitleDetailsScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        if (isLoading) {
+        if (titleDetailsState.isLoading) {
             CircularProgressIndicator()
         }
 
-        if (titleDetails.errorMessage.isEmpty()) {
+        if (titleDetailsState.titleDetails.errorMessage.isEmpty() && titleDetailsState.titleDetails.id.isNotBlank()) {
             TitleDetailsComposable(
                 modifier = Modifier
                     .fillMaxSize()
                     .verticalScroll(state = rememberScrollState()),
-                titleDetails = titleDetails
+                titleDetails = titleDetailsState.titleDetails
             )
         }
 
-        if (errorMessage.isNotEmpty()) {
-            Text(text = errorMessage)
+        if (titleDetailsState.errorMessage.isNotEmpty()) {
+            Text(text = titleDetailsState.errorMessage)
         }
     }
 }
@@ -264,11 +274,13 @@ private fun TitleDetailsComposable(
         SimilarTitleList(
             similarTitles = titleDetails.similarTitles,
             onClick = {},
-            modifier = Modifier.fillMaxWidth().constrainAs(similarTitlesRef) {
-                top.linkTo(similarTitlesTitleRef.bottom, margin = 2.dp)
-                start.linkTo(similarTitlesTitleRef.start)
-                end.linkTo(parent.end)
-            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .constrainAs(similarTitlesRef) {
+                    top.linkTo(similarTitlesTitleRef.bottom, margin = 2.dp)
+                    start.linkTo(similarTitlesTitleRef.start)
+                    end.linkTo(parent.end)
+                },
             contentPadding = PaddingValues(4.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         )

@@ -33,14 +33,16 @@ import com.ronalad.mavaroo.ui.theme.Snow
 
 @Composable
 fun MovieItem(
+    modifier: Modifier = Modifier,
     title: String,
     image: String,
     type: String,
     rating: Double
 ) {
     Card(
+        modifier = modifier,
         shape = RoundedCornerShape(CornerSize(16.dp)),
-        elevation = 4.dp,
+        elevation = 4.dp
     ) {
 
         ConstraintLayout(

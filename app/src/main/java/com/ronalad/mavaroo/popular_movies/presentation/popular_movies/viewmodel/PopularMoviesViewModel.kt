@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.ronalad.mavaroo.popular_movies.domain.use_cases.GetPopularMoviesUseCase
 import com.ronalad.mavaroo.utils.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
